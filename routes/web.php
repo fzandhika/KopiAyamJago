@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\PasswordController as AdminPasswordController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\CartController;
@@ -68,5 +69,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::patch('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.status');
         Route::get('settings', [AdminSettingController::class, 'edit'])->name('settings.edit');
         Route::put('settings', [AdminSettingController::class, 'update'])->name('settings.update');
+        Route::get('password', [AdminPasswordController::class, 'edit'])->name('password.edit');
+        Route::put('password', [AdminPasswordController::class, 'update'])->name('password.update');
     });
 });

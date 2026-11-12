@@ -164,7 +164,7 @@ Login di `/admin/login`.
 | Email | `admin@kopiayamjago.test` |
 | Password | `ayamjago123` |
 
-Akun ini dibuat oleh seeder dan memiliki `is_admin = true`. **Ganti password setelah pertama kali dipakai.**
+Akun ini dibuat oleh seeder dan memiliki `is_admin = true`. **Ganti password setelah pertama kali dipakai** melalui menu **Keamanan** di panel admin (`/admin/password`).
 
 Hanya user dengan `is_admin = true` yang dapat mengakses panel. User biasa akan mendapat respons 403.
 

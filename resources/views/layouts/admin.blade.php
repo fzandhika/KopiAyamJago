@@ -6,6 +6,7 @@
         ['route' => 'admin.categories.index', 'label' => 'Kategori', 'icon' => 'M4 6h16M4 12h16M4 18h10'],
         ['route' => 'admin.orders.index', 'label' => 'Pesanan', 'icon' => 'M6 3h12l2 5v13H4V8l2-5Zm0 5h12M9 13h6'],
         ['route' => 'admin.settings.edit', 'label' => 'Pengaturan', 'icon' => 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm8-3a8 8 0 0 1-.2 1.7l2 1.6-2 3.4-2.4-1a8 8 0 0 1-2.9 1.7L14 22h-4l-.4-2.6a8 8 0 0 1-2.9-1.7l-2.4 1-2-3.4 2-1.6A8 8 0 0 1 4 12c0-.6.1-1.2.2-1.7l-2-1.6 2-3.4 2.4 1A8 8 0 0 1 9.5 4.6L10 2h4l.5 2.6a8 8 0 0 1 2.9 1.7l2.4-1 2 3.4-2 1.6c.1.5.2 1.1.2 1.7Z'],
+        ['route' => 'admin.password.edit', 'label' => 'Keamanan', 'icon' => 'M14 7a4 4 0 1 1-3.2 6.4L4 20v-3h3v-3h3l1.3-1.3A4 4 0 0 1 14 7Zm2 1.5h.01'],
     ];
 @endphp
 <!DOCTYPE html>
@@ -63,6 +64,7 @@
                     <div class="mt-4 rounded-lg bg-white/5 px-3 py-2.5">
                         <p class="truncate text-xs font-extrabold text-karung">{{ $admin?->name }}</p>
                         <p class="truncate text-[10px] text-karung/50">{{ $admin?->email }}</p>
+                        <a href="{{ route('admin.password.edit') }}" class="mt-1 block text-[11px] font-bold text-karung/60 hover:text-stiker">Ganti password</a>
                         <form method="POST" action="{{ route('admin.logout') }}" class="mt-2">
                             @csrf
                             <button type="submit" class="text-[11px] font-bold text-stiker hover:underline">Keluar</button>
