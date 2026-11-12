@@ -15,6 +15,15 @@
 /auth.json
 /.flyenv
 /flyenv-create-project/
+
+# File tooling/agent — bukan bagian aplikasi
+/.agents/
+/.claude/
+/AGENTS.md
+/CLAUDE.md
+/boost.json
+/.mcp.json
+/opencode.json
 /node_modules
 /public/build
 /public/fonts-manifest.dev.json
