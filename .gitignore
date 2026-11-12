@@ -15,6 +15,7 @@
 /auth.json
 /.flyenv
 /flyenv-create-project/
+/dist/
 
 # File tooling/agent — bukan bagian aplikasi
 /.agents/
