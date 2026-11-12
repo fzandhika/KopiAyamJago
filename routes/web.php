@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Http\Response;
@@ -39,6 +40,7 @@ Route::get('/pesanan/{order:order_code}', [CheckoutController::class, 'success']
 Route::get('/cerita-kami', [PageController::class, 'story'])->name('story');
 Route::get('/kontak', [PageController::class, 'contact'])->name('contact');
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/media/{path}', MediaController::class)->where('path', '.*')->name('media');
 Route::get('/robots.txt', fn (): Response => response(
     "User-agent: *\nAllow: /\nDisallow: /admin\n\nSitemap: ".route('sitemap')."\n",
     200,

@@ -50,6 +50,10 @@ class StoreProductRequest extends FormRequest
             'variants.required' => 'Minimal satu varian berat harus diisi.',
             'variants.*.weight_gram.required' => 'Berat varian wajib diisi.',
             'variants.*.price.required' => 'Harga varian wajib diisi.',
+            'image.image' => 'File yang dipilih harus berupa gambar.',
+            'image.mimes' => 'Format foto harus JPG, PNG, atau WebP.',
+            'image.max' => 'Ukuran foto maksimal 2 MB. Kompres dulu fotonya, ya.',
+            'image.uploaded' => 'Foto gagal diunggah. Coba file yang lebih kecil atau hubungi hosting.',
         ];
     }
 }

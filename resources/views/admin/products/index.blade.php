@@ -47,8 +47,8 @@
                                 <td class="px-5 py-3">
                                     <div class="flex items-center gap-3">
                                         <span class="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-lg border border-espresso/10 bg-karung-dark/40">
-                                            @if ($product->image)
-                                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($product->image) }}" alt="" class="h-full w-full object-cover" loading="lazy">
+                                            @if ($product->image_url)
+                                                <img src="{{ $product->image_url }}" alt="" class="h-full w-full object-cover" loading="lazy">
                                             @else
                                                 <span class="font-display text-sm text-espresso/40">{{ mb_substr($product->name, 0, 2) }}</span>
                                             @endif

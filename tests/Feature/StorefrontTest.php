@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class StorefrontTest extends TestCase
@@ -168,5 +170,86 @@ class StorefrontTest extends TestCase
             'slug' => 'robusta-uji',
         ]);
         $this->assertDatabaseCount('product_variants', 2);
+    }
+
+    public function test_admin_bisa_mengunggah_foto_produk(): void
+    {
+        Storage::fake('public');
+
+        $admin = User::factory()->create(['is_admin' => true]);
+        $category = Category::factory()->create();
+
+        $this->actingAs($admin)->post('/admin/products', [
+            'category_id' => $category->id,
+            'name' => 'Arabika Uji Foto',
+            'origin' => 'Toraja',
+            'type' => 'Arabika',
+            'roast_level' => 'Medium',
+            'description' => 'Produk uji unggah foto dengan deskripsi yang cukup panjang untuk validasi.',
+            'flavor_notes' => [
+                'bitterness' => 2,
+                'acidity' => 4,
+                'aroma' => 5,
+                'body' => 3,
+                'notes' => 'Jeruk dan gula aren',
+            ],
+            'is_active' => '1',
+            'image' => UploadedFile::fake()->image('foto-produk.png', 800, 800),
+            'variants' => [
+                ['weight_gram' => 100, 'price' => 30_000, 'stock' => 8],
+            ],
+        ])->assertRedirect(route('admin.products.index'));
+
+        $product = Product::query()->where('slug', 'arabika-uji-foto')->firstOrFail();
+
+        $this->assertNotNull($product->image);
+        $this->assertStringStartsWith('products/', $product->image);
+        $this->assertSame(route('media', ['path' => $product->image]), $product->image_url);
+        Storage::disk('public')->assertExists($product->image);
+    }
+
+    public function test_foto_produk_disajikan_lewat_route_media(): void
+    {
+        Storage::fake('public');
+        Storage::disk('public')->put('products/contoh.png', 'isi-gambar');
+
+        $this->get(route('media', ['path' => 'products/contoh.png']))->assertOk();
+        $this->get(route('media', ['path' => 'products/tidak-ada.png']))->assertNotFound();
+    }
+
+    public function test_foto_produk_lebih_dari_2mb_ditolak(): void
+    {
+        Storage::fake('public');
+
+        $admin = User::factory()->create(['is_admin' => true]);
+        $category = Category::factory()->create();
+
+        $this->actingAs($admin)
+            ->from('/admin/products/create')
+            ->post('/admin/products', [
+                'category_id' => $category->id,
+                'name' => 'Robusta Foto Kegedean',
+                'origin' => 'Lampung',
+                'type' => 'Robusta',
+                'roast_level' => 'Dark',
+                'description' => 'Produk uji dengan foto yang ukurannya melebihi batas dua megabita.',
+                'flavor_notes' => [
+                    'bitterness' => 5,
+                    'acidity' => 1,
+                    'aroma' => 3,
+                    'body' => 5,
+                ],
+                'is_active' => '1',
+                'image' => UploadedFile::fake()->image('foto-besar.png', 1200, 1200)->size(3000),
+                'variants' => [
+                    ['weight_gram' => 100, 'price' => 20_000, 'stock' => 5],
+                ],
+            ])
+            ->assertRedirect('/admin/products/create')
+            ->assertSessionHasErrors(['image' => 'Ukuran foto maksimal 2 MB. Kompres dulu fotonya, ya.']);
+
+        $this->assertDatabaseMissing('products', [
+            'name' => 'Robusta Foto Kegedean',
+        ]);
     }
 }

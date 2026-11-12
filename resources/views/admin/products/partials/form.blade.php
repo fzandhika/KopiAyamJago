@@ -12,6 +12,7 @@
 
     $taste = old('flavor_notes', $product->taste_profile);
     $imagePath = $product->image;
+    $imageExists = $imagePath && \Illuminate\Support\Facades\Storage::disk('public')->exists($imagePath);
 @endphp
 
 <form method="POST" action="{{ $product->exists ? route('admin.products.update', $product) : route('admin.products.store') }}" enctype="multipart/form-data" class="space-y-6">
@@ -170,16 +171,22 @@
                     Opsional. Tanpa foto, katalog memakai ilustrasi toples CSS bawaan.
                 </p>
 
-                @if ($imagePath)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($imagePath) }}" alt="Foto {{ $product->name }}" class="mt-3 aspect-square w-full rounded-xl border border-espresso/10 object-cover">
+                @if ($imageExists)
+                    <img src="{{ $product->image_url }}" alt="Foto {{ $product->name }}" class="mt-3 aspect-square w-full rounded-xl border border-espresso/10 object-cover">
                 @else
                     <div class="mt-3 grid aspect-square w-full place-items-center rounded-xl border-2 border-dashed border-espresso/15 bg-karung-dark/20">
                         <p class="px-4 text-center font-marker text-sm text-espresso/40">Belum ada foto.<br>Ilustrasi toples dipakai.</p>
                     </div>
                 @endif
 
-                <input type="file" name="image" accept="image/jpeg,image/png,image/webp" class="mt-3 block w-full text-[11px] font-semibold text-espresso/60 file:mr-2 file:rounded-lg file:border-0 file:bg-sangrai file:px-3 file:py-2 file:text-[11px] file:font-bold file:text-karung">
-                <p class="mt-1 text-[10px] text-espresso/40">JPG, PNG, atau WebP. Maks 2 MB. Rasio kotak paling rapi.</p>
+                <div data-image-preview-wrap class="mt-3 hidden">
+                    <p class="mb-1 text-[10px] font-extrabold uppercase tracking-widest text-jago">Pratinjau foto baru</p>
+                    <img data-image-preview alt="Pratinjau foto produk baru" class="aspect-square w-full rounded-xl border-2 border-jago/40 object-cover">
+                    <p data-image-error class="mt-1 hidden text-[11px] font-semibold text-jago"></p>
+                </div>
+
+                <input type="file" name="image" accept="image/jpeg,image/png,image/webp" data-image-input class="mt-3 block w-full text-[11px] font-semibold text-espresso/60 file:mr-2 file:rounded-lg file:border-0 file:bg-sangrai file:px-3 file:py-2 file:text-[11px] file:font-bold file:text-karung">
+                <p class="mt-1 text-[10px] text-espresso/40">JPG, PNG, atau WebP. Maks 2 MB. Rasio kotak paling rapi. Foto baru tersimpan setelah kamu klik Simpan.</p>
                 @error('image') <p class="mt-1 text-xs font-semibold text-jago">{{ $message }}</p> @enderror
             </section>
 

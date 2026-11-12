@@ -8,8 +8,8 @@
             <div class="jar-lid relative z-10 mx-auto h-5 w-[58%]"></div>
 
             <div class="jar-body -mt-1 aspect-[5/6]">
-                @if ($product->image)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($product->image) }}"
+                @if ($product->image_url)
+                    <img src="{{ $product->image_url }}"
                          alt="Biji kopi {{ $product->name }}"
                          class="absolute inset-0 h-full w-full object-cover"
                          loading="lazy">

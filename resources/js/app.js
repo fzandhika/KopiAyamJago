@@ -126,4 +126,34 @@ onReady(() => {
             }
         });
     }
+
+    /* Pratinjau foto produk di panel admin */
+    const imageInput = document.querySelector('[data-image-input]');
+    const imagePreview = document.querySelector('[data-image-preview]');
+    const imagePreviewWrap = document.querySelector('[data-image-preview-wrap]');
+    const imageError = document.querySelector('[data-image-error]');
+
+    imageInput?.addEventListener('change', () => {
+        const file = imageInput.files?.[0];
+
+        if (!file || !imagePreview || !imagePreviewWrap) {
+            return;
+        }
+
+        if (imagePreview.dataset.objectUrl) {
+            URL.revokeObjectURL(imagePreview.dataset.objectUrl);
+        }
+
+        const objectUrl = URL.createObjectURL(file);
+        imagePreview.src = objectUrl;
+        imagePreview.dataset.objectUrl = objectUrl;
+        imagePreviewWrap.classList.remove('hidden');
+
+        const tooBig = file.size > 2 * 1024 * 1024;
+        imageError?.classList.toggle('hidden', !tooBig);
+
+        if (imageError && tooBig) {
+            imageError.textContent = 'Ukuran file ' + (file.size / 1024 / 1024).toFixed(1) + ' MB, melebihi batas 2 MB.';
+        }
+    });
 });

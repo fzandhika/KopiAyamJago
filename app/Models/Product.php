@@ -75,6 +75,16 @@ class Product extends Model
     }
 
     /**
+     * URL publik foto produk. Memakai route media agar tidak bergantung pada symlink storage.
+     */
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::get(
+            fn (): ?string => $this->image ? route('media', ['path' => $this->image]) : null
+        );
+    }
+
+    /**
      * Profil rasa 1–5. Nilai disimpan pada kolom JSON flavor_notes.
      *
      * @return array{bitterness: int, acidity: int, aroma: int, body: int, notes: string}
