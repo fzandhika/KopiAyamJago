@@ -1,0 +1,349 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/* =========================================================
+   DESIGN SYSTEM — KOPI AYAM JAGO
+   Palet: merah jago, hitam sangrai, krem karung, emas rak.
+   ========================================================= */
+@theme {
+    --color-jago: #b3201f;
+    --color-jago-dark: #8a1716;
+    --color-sangrai: #1e1410;
+    --color-sangrai-soft: #2b1d16;
+    --color-karung: #f4e9d3;
+    --color-karung-dark: #e7d7b8;
+    --color-emas: #c8962e;
+    --color-stiker: #f6b820;
+    --color-harga: #e8531f;
+    --color-daun: #4f7a3a;
+    --color-espresso: #3b2418;
+
+    --font-display: 'Alfa Slab One', 'Georgia', serif;
+    --font-marker: 'Caveat Brush', 'Segoe Script', cursive;
+    --font-sans: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--color-karung);
+        color: var(--color-espresso);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-display);
+        letter-spacing: -0.01em;
+        line-height: 1.05;
+    }
+
+    ::selection {
+        background: var(--color-stiker);
+        color: var(--color-espresso);
+    }
+
+    :focus-visible {
+        outline: 3px solid var(--color-emas);
+        outline-offset: 2px;
+    }
+}
+
+/* ---------- Tekstur kertas karung ---------- */
+@utility paper {
+    background-color: var(--color-karung);
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(200, 150, 46, 0.08) 0, transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(179, 32, 31, 0.05) 0, transparent 40%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+}
+
+@utility paper-dark {
+    background-color: var(--color-sangrai);
+    background-image:
+        radial-gradient(circle at 15% 20%, rgba(179, 32, 31, 0.18) 0, transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(79, 122, 58, 0.14) 0, transparent 45%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+}
+
+/* ---------- Tombol ---------- */
+@layer components {
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.4rem;
+        font-weight: 800;
+        font-size: 0.95rem;
+        letter-spacing: 0.01em;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+        cursor: pointer;
+    }
+
+    .btn-sm {
+        padding: 0.45rem 0.9rem;
+        font-size: 0.85rem;
+        box-shadow: 2px 2px 0 0 var(--color-sangrai);
+    }
+
+    .btn-jago,
+    .btn-stiker,
+    .btn-outline,
+    .btn-wa {
+        border: 2px solid var(--color-sangrai);
+        box-shadow: 3px 3px 0 0 var(--color-sangrai);
+    }
+
+    .btn-jago {
+        background-color: var(--color-jago);
+        color: #fff8ec;
+    }
+
+    .btn-stiker {
+        background-color: var(--color-stiker);
+        color: var(--color-espresso);
+    }
+
+    .btn-outline {
+        background-color: transparent;
+        color: var(--color-espresso);
+        border-color: var(--color-espresso);
+    }
+
+    .btn-wa {
+        background-color: #1faa59;
+        color: #fff;
+        border-color: #0f5132;
+        box-shadow: 3px 3px 0 0 #0f5132;
+    }
+
+    .btn-jago:hover,
+    .btn-stiker:hover,
+    .btn-wa:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 5px 5px 0 0 var(--color-sangrai);
+    }
+
+    .btn-outline:hover {
+        background-color: var(--color-sangrai);
+        color: var(--color-karung);
+    }
+
+    .btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 0 var(--color-sangrai);
+    }
+}
+
+/* ---------- Bingkai rak kayu ---------- */
+@utility frame-gold {
+    border: 2px solid var(--color-emas);
+    box-shadow:
+        inset 0 0 0 3px rgba(244, 233, 211, 0.55),
+        0 10px 24px -14px rgba(30, 20, 16, 0.55);
+}
+
+/* ---------- Label & input ---------- */
+@utility label-jago {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-espresso);
+    margin-bottom: 0.35rem;
+}
+
+@utility input-jago {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 2px solid rgba(59, 36, 24, 0.28);
+    background-color: #fffaf0;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.95rem;
+    color: var(--color-espresso);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input-jago:focus {
+    border-color: var(--color-emas);
+    box-shadow: 0 0 0 3px rgba(200, 150, 46, 0.22);
+    outline: none;
+}
+
+/* ---------- Stiker harga (efek cap pasar) ---------- */
+@utility sticker {
+    display: inline-block;
+    background: linear-gradient(180deg, #ffd45c 0%, var(--color-stiker) 55%, #e8a70e 100%);
+    color: var(--color-jago);
+    font-family: var(--font-marker);
+    border: 2px solid var(--color-jago);
+    border-radius: 14px;
+    box-shadow: 2px 2px 0 rgba(59, 36, 24, 0.35);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+/* ---------- Toples kaca ---------- */
+.jar-body {
+    position: relative;
+    background: linear-gradient(100deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.12) 35%, rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0.08));
+    border: 2px solid rgba(200, 150, 46, 0.65);
+    border-radius: 18px 18px 22px 22px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.jar-body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(59, 36, 24, 0.14));
+    z-index: 2;
+    pointer-events: none;
+}
+
+.jar-lid {
+    background: linear-gradient(180deg, #e2b357, var(--color-emas) 45%, #8f6a1c);
+    border: 2px solid #6d5015;
+    border-radius: 10px 10px 6px 6px;
+    box-shadow: 0 3px 0 rgba(59, 36, 24, 0.35);
+}
+
+.jar-lid::after {
+    content: '';
+    display: block;
+    height: 4px;
+    margin: 5px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.jar-coffee {
+    background-color: #3a2114;
+    background-image:
+        radial-gradient(ellipse 9px 6px at 20% 30%, rgba(96, 58, 32, 0.95) 40%, transparent 41%),
+        radial-gradient(ellipse 9px 6px at 55% 55%, rgba(78, 45, 24, 0.95) 40%, transparent 41%),
+        radial-gradient(ellipse 9px 6px at 80% 25%, rgba(104, 62, 34, 0.9) 40%, transparent 41%),
+        radial-gradient(ellipse 9px 6px at 35% 78%, rgba(88, 52, 28, 0.9) 40%, transparent 41%),
+        radial-gradient(ellipse 9px 6px at 70% 88%, rgba(70, 40, 22, 0.9) 40%, transparent 41%);
+    background-size: 46px 46px;
+}
+
+.jar-hover {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+}
+
+.group:hover .jar-hover {
+    transform: translateY(-6px) rotate(-1.4deg);
+}
+
+/* ---------- Lampion & neon ---------- */
+@utility lantern {
+    background: radial-gradient(circle at 35% 30%, #ff6a4d, var(--color-jago) 60%, #7a1211);
+    border-radius: 46% 46% 44% 44%;
+    box-shadow:
+        inset 0 0 18px rgba(0, 0, 0, 0.25),
+        0 0 30px rgba(232, 83, 31, 0.35);
+    animation: sway 6s ease-in-out infinite;
+    transform-origin: top center;
+}
+
+@utility neon-glow {
+    box-shadow:
+        0 0 12px rgba(96, 140, 255, 0.35),
+        0 0 34px rgba(150, 96, 255, 0.22);
+}
+
+@keyframes sway {
+    0%,
+    100% {
+        transform: rotate(-3deg);
+    }
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+@keyframes stamp-in {
+    0% {
+        opacity: 0;
+        transform: scale(1.6) rotate(-8deg);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(0.96) rotate(1deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+.stamp-in {
+    animation: stamp-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rise {
+    animation: rise 0.6s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lantern,
+    .stamp-in,
+    .rise,
+    .jar-hover {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+/* ---------- Motif awan Tionghoa (pembatas section) ---------- */
+@utility cloud-divider {
+    height: 14px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='14' viewBox='0 0 48 14'%3E%3Cpath d='M0 12c6 0 6-8 12-8s6 8 12 8 6-8 12-8 6 8 12 8' fill='none' stroke='%23C8962E' stroke-width='1.6' opacity='0.55'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+}
+
+/* ---------- Profil rasa ---------- */
+.taste-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(59, 36, 24, 0.12);
+    overflow: hidden;
+}
+
+.taste-bar > span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-emas), var(--color-harga));
+}
+
+/* ---------- Scrollbar tipis untuk baris filter ---------- */
+.no-scrollbar {
+    scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
