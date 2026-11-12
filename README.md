@@ -1,2 +1,0 @@
-# KopiAyamJago
-website KopiAyamJago
